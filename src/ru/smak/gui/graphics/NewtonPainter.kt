@@ -30,7 +30,7 @@ class NewtonPainter(val plane: CartesianScreenPlane, val newton: Newton):Painter
             }
         }
     }
-    public fun drawLines(g:Graphics?){
+    private  fun drawLines(g:Graphics?){
         if(g!=null){
             g.color= Color.BLUE
             val n = ((plane.xMax-plane.xMin)*100).toInt()//количество разбиений

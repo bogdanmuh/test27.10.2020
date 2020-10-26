@@ -42,17 +42,17 @@ class CartesianPainter(val plane: CartesianScreenPlane) : Painter {
             var coefficientX = 1.0
             var coefficientY = 1.0
 
-            val differenceX = (plane.xMax - plane.xMin) * 10.toInt()
-            val differenceY = (plane.yMax - plane.yMin) * 10.toInt()
+            val differenceX = (plane.xMax - plane.xMin) * 10
+            val differenceY = (plane.yMax - plane.yMin) * 10
 
             if (differenceX <= 60) coefficientX = 10.0 else
                 if (differenceX <= 230) coefficientX = 2.0 else
                     if (differenceX <= 510) coefficientX = 1.0 else
-                        if (differenceX <= 1000) coefficientX = 0.2 //else coefficientX = 0.5
+                        if (differenceX <= 2000) coefficientX = 0.2 //else coefficientX = 0.5
             if (differenceY <= 60) coefficientY = 10.0 else
                 if (differenceY <= 230) coefficientY = 2.0 else
                     if (differenceY <= 500) coefficientY = 1.0 else
-                        if (differenceY <= 1000) coefficientY = 0.2 //else coefficientY = 0.5
+                        if (differenceY <= 2000) coefficientY = 0.2 //else coefficientY = 0.5
 
 
             if (0.0 <= plane.xMin || 0.0 >= plane.xMax) {
@@ -106,17 +106,17 @@ class CartesianPainter(val plane: CartesianScreenPlane) : Painter {
             var coefficientX = 1.0
             var coefficientY = 1.0
 
-            val differenceX = (plane.xMax - plane.xMin) * 100.toInt()
-            val differenceY = (plane.yMax - plane.yMin) * 100.toInt()
+            val differenceX = (plane.xMax - plane.xMin) * 100
+            val differenceY = (plane.yMax - plane.yMin) * 100
 
             if (differenceX <= 600) coefficientX = 10.0 else
                 if (differenceX <= 2300) coefficientX = 2.0 else
                     if (differenceX <= 5100) coefficientX = 1.0 else
-                        if (differenceX <= 10000) coefficientX = 0.2 // else coefficientX = 0.5
+                        if (differenceX <= 20000) coefficientX = 0.2 // else coefficientX = 0.5
             if (differenceY <= 600) coefficientY = 10.0 else
                 if (differenceY <= 2300) coefficientY = 2.0 else
                     if (differenceY <= 5100) coefficientY = 1.0 else
-                        if (differenceY <= 10000) coefficientY = 0.2 // else coefficientY = 0.5
+                        if (differenceY <= 20000) coefficientY = 0.2 // else coefficientY = 0.5
 
             if (0.0 <= plane.yMin || 0.0 >= plane.yMax) {
                 for (i in (plane.xMin * coefficientX).toInt()..(plane.xMax * coefficientX).toInt()) {//горизонтальные числа
