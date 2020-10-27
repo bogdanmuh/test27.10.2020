@@ -6,6 +6,7 @@ import ru.smak.gui.graphics.CartesianPainter
 import ru.smak.gui.graphics.NewtonPainter
 import ru.smak.gui.graphics.convertation.CartesianScreenPlane
 import ru.smak.gui.graphics.convertation.Converter
+import ru.smak.polynoms.Deverentive
 import ru.smak.polynoms.Newton
 import java.awt.Color
 import java.awt.Dimension
@@ -18,8 +19,8 @@ class MainWindow : JFrame(){// aбскратный класс для созда�
     private val minSize = Dimension(550, 400)
     private val mainPanel: GraphicsPanel
     private val controlPanel: ControlPanel
-
     private val newton = Newton(mutableMapOf())
+    private val diverentive = Deverentive(mutableMapOf())
     init{
         defaultCloseOperation = EXIT_ON_CLOSE// при нажатие  на крестик прога закрываеться
         minimumSize = Dimension(minSize.width+200, minSize.height+400)// why
@@ -54,16 +55,19 @@ class MainWindow : JFrame(){// aбскратный класс для созда�
         )
 
         val dp = CartesianPainter(plane)
-
+        val diverentiveP = NewtonPainter(plane,diverentive)
         val NewtonP = NewtonPainter(plane,newton)
 
         mainPanel.addComponentListener(object : ComponentAdapter() {
             override fun componentResized(e: ComponentEvent?) {
                 dp.plane.realWidth=mainPanel.width
                 NewtonP.plane.realWidth=mainPanel.width
+                diverentiveP.plane.realWidth=mainPanel.width
 
                 dp.plane.realHeight=mainPanel.height
                 NewtonP.plane.realHeight=mainPanel.height
+                diverentiveP.plane.realWidth=mainPanel.width
+
 
                 mainPanel.repaint()
             }
@@ -76,6 +80,7 @@ class MainWindow : JFrame(){// aбскратный класс для созда�
                     if(e.point.x < plane.realWidth && e.point.x > 0 && e.point.y > 0 && e.point.y < plane.realHeight ){
                         //добавление в полином точек
                         newton.addNote(Converter.xScr2Crt(e.point.x,plane),Converter.yScr2Crt(e.point.y,plane))
+                        diverentive.addNote(Converter.xScr2Crt(e.point.x,plane),Converter.yScr2Crt(e.point.y,plane))
                         mainPanel.repaint()
                     }
                 }
@@ -84,19 +89,31 @@ class MainWindow : JFrame(){// aбскратный класс для созда�
         controlPanel.addValChangeListener {
             dp.plane.xMin = controlPanel.smXMin.number.toDouble()
             NewtonP.plane.xMin = controlPanel.smXMin.number.toDouble()
+            diverentiveP.plane.xMin = controlPanel.smXMin.number.toDouble()
 
             dp.plane.xMax = controlPanel.smXMax.number.toDouble()
             NewtonP.plane.xMax = controlPanel.smXMax.number.toDouble()
+            diverentiveP.plane.xMax = controlPanel.smXMax.number.toDouble()
 
             dp.plane.yMin = controlPanel.smYMin.number.toDouble()
             NewtonP.plane.yMin = controlPanel.smYMin.number.toDouble()
+            diverentiveP.plane.yMin = controlPanel.smYMin.number.toDouble()
 
             dp.plane.yMax = controlPanel.smYMax.number.toDouble()
             NewtonP.plane.yMin = controlPanel.smYMin.number.toDouble()
+            diverentiveP.plane.yMin = controlPanel.smYMin.number.toDouble()
 
             mainPanel.repaint()
         }
+
+        controlPanel.addColorListener {
+            NewtonP.setColor(controlPanel.getColor1())
+            diverentiveP.setColor(controlPanel.getColor2())
+            mainPanel.paint(mainPanel.graphics)
+        }
+
         mainPanel.addPainter(dp)
         mainPanel.addPainter(NewtonP)
+        mainPanel.addPainter(diverentiveP)
     }
 }

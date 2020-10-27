@@ -1,5 +1,7 @@
 package ru.smak.gui.components
 
+import java.awt.Color
+import java.time.chrono.MinguoChronology
 import javax.swing.*
 import javax.swing.border.EtchedBorder
 
@@ -27,7 +29,18 @@ class ControlPanel : JPanel(){
     }
 
     private val valChangeListeners = mutableListOf<()->Unit>()
-            //
+    private val colorListeners = mutableListOf<()->Unit>()
+
+    val chButton1= JButton("Цвет графика")
+    val chButton2= JButton("Цвет производной")
+
+    private var color1= Color.BLUE
+    fun getColor1(): Color {return color1}
+
+    private var color2= Color.RED
+    fun getColor2(): Color {return color2}
+
+
     init{
         border = EtchedBorder()//
 
@@ -62,6 +75,19 @@ class ControlPanel : JPanel(){
             valChangeListeners.forEach { it() }
         }
 
+        chButton1.addActionListener {
+            run {
+                color1 = JColorChooser.showDialog(this, "Select a color", Color.RED)
+                colorListeners.forEach { l -> l() }
+            }
+        }
+        chButton2.addActionListener {
+            run {
+                color2 = JColorChooser.showDialog(this, "Select a color", Color.RED)
+                colorListeners.forEach { l -> l() }
+            }
+        }
+
         sXMin = JSpinner(smXMin)//7
         sXMax = JSpinner(smXMax)
         sYMin = JSpinner(smYMin)
@@ -70,6 +96,12 @@ class ControlPanel : JPanel(){
         val gl = GroupLayout(this)//?
         gl.setVerticalGroup(gl.createSequentialGroup()
                 .addGap(4)// отступ
+                .addGroup(
+                        gl.createParallelGroup()
+                                .addComponent(chButton1, MIN_SZ, MIN_SZ, MIN_SZ)
+                                .addComponent(chButton2, MIN_SZ, MIN_SZ, MIN_SZ)
+                )
+                .addGap(4)
                 .addGroup(
                         gl.createParallelGroup()
                                 .addComponent(lXMin, MIN_SZ, MIN_SZ, MIN_SZ)
@@ -93,6 +125,7 @@ class ControlPanel : JPanel(){
                         .addGap(4)
                         .addGroup(
                                 gl.createParallelGroup()
+                                        .addComponent(chButton1, MIN_SZ, MIN_SZ, MIN_SZ)
                                         .addComponent(lXMin, MIN_SZ, MIN_SZ, MIN_SZ)
                                         .addComponent(lYMin, MIN_SZ, MIN_SZ, MIN_SZ)
                         )
@@ -105,6 +138,7 @@ class ControlPanel : JPanel(){
                         .addGap(8, 8, Int.MAX_VALUE)
                         .addGroup(
                                 gl.createParallelGroup()
+                                        .addComponent(chButton2, MIN_SZ, MIN_SZ, MIN_SZ)
                                         .addComponent(lXMax, MIN_SZ, MIN_SZ, MIN_SZ)
                                         .addComponent(lYMax, MIN_SZ, MIN_SZ, MIN_SZ)
                         )
@@ -125,5 +159,12 @@ class ControlPanel : JPanel(){
 
     fun removeValChangeListener(l: ()->Unit){
         valChangeListeners.remove(l)
+    }
+
+    fun addColorListener(l: () -> Unit){
+        colorListeners.add(l)
+    }
+    fun removeColorListener(l: () -> Unit){
+        colorListeners.remove(l)
     }
 }

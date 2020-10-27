@@ -1,6 +1,6 @@
 package ru.smak.polynoms
 
-class Newton (dots:MutableMap<Double,Double>):Polynom() {
+open class Newton (dots:MutableMap<Double,Double>):Polynom() {
      val divDiff = mutableMapOf<Pair<Int, Int>, Double>()
     private var fundamental = Polynom(doubleArrayOf(1.0))
     private var base = Polynom(doubleArrayOf(0.0))
@@ -68,7 +68,7 @@ class Newton (dots:MutableMap<Double,Double>):Polynom() {
         }
     }
 
-    fun addNote(x: Double, y: Double) {
+    open fun addNote(x: Double, y: Double) {
 
         for (i in 0..dots1.size-1) {
             if (dots1[i] == x) {

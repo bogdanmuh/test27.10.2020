@@ -134,9 +134,10 @@ class CartesianPainter(val plane: CartesianScreenPlane) : Painter {
                     x1 = Math.round(x1 * 10.0) / 10.0
                     //x1=Math.round(x1*1.0)/1.0
                     val p = m.getStringBounds(x1.toString(), g).width.toInt()
+                    val b = m.getStringBounds(x1.toString(),g).height.toInt()
 
-                    g.drawString(x1.toString(), x - p / 2, Converter.yCrt2Scr(plane.yMin, plane) - 6)
-                    g.drawString(x1.toString(), x - p / 2, Converter.yCrt2Scr(plane.yMax, plane) + 15)
+                    g.drawString(x1.toString(), x - p / 2, Converter.yCrt2Scr(plane.yMin, plane) - b/2)
+                    g.drawString(x1.toString(), x - p / 2, Converter.yCrt2Scr(plane.yMax, plane) + b)
                 }
             } else {
                 for (i in (plane.xMin * coefficientX).toInt()..(plane.xMax * coefficientX).toInt()) {//горизонтальные числа
@@ -154,7 +155,8 @@ class CartesianPainter(val plane: CartesianScreenPlane) : Painter {
                     x1 = Math.round(x1 * 10.0) / 10.0
                     //x1=Math.round(x1*1.0)/1.0
                     val p = m.getStringBounds(x1.toString(), g).width.toInt()
-                    g.drawString(x1.toString(), x - p / 2, y0 - 5)
+                    val b = m.getStringBounds(x1.toString(),g).height.toInt()
+                    g.drawString(x1.toString(), x - p / 2, y0 - b/2)
                 }
             }
 
@@ -173,9 +175,10 @@ class CartesianPainter(val plane: CartesianScreenPlane) : Painter {
                     y1 = Math.round(y1 * 10.0) / 10.0
                     //y1=Math.round(y1*1.0)/1.0
                     val p = m.getStringBounds(y1.toString(), g).height.toInt()
+                    val b = m.getStringBounds(y1.toString(),g).width.toInt()
                     if (y1 != 0.0) {
-                        g.drawString(y1.toString(), Converter.xCrt2Scr(plane.xMin, plane) + 8, y + p / 2 - 3)
-                        g.drawString(y1.toString(), Converter.xCrt2Scr(plane.xMax, plane) - 25, y + p / 2 - 3)
+                        g.drawString(y1.toString(), Converter.xCrt2Scr(plane.xMin, plane) + b/2, y + p / 4)
+                        g.drawString(y1.toString(), Converter.xCrt2Scr(plane.xMax, plane) - (b*1.5).toInt(), y + p / 4)
                     }
                 }
             } else {
@@ -189,9 +192,10 @@ class CartesianPainter(val plane: CartesianScreenPlane) : Painter {
                     y1 = Math.round(y1 * 100.0) / 100.0
                     y1 = Math.round(y1 * 10.0) / 10.0
                     val p = m.getStringBounds(y1.toString(), g).height.toInt()
+                    val b = m.getStringBounds(y1.toString(),g).width.toInt()
                     //y1=Math.round(y1*1.0)/1.0
                     if (y1 != 0.0) {
-                        g.drawString(y1.toString(), x0 + 6, y + p / 2)
+                        g.drawString(y1.toString(), x0 + b/2, y + p / 4)
                     }
                 }
             }
